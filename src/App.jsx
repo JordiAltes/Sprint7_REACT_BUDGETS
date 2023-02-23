@@ -17,10 +17,14 @@ function App() {
       selectedOptions[option] ? total + prices[option] : total,
     0
   );
+  const [webPageSelected, setWebPageSelected] = useState(false);
 
   function handleCheckboxChange(event) {
     const { name, checked } = event.target;
     setSelectedOptions({ ...selectedOptions, [name]: checked });
+    if (name === "webPage") {
+      setWebPageSelected(webPageSelected === false ? true : false);
+    }
   }
 
   return (
@@ -36,6 +40,18 @@ function App() {
           Una pàgina web (500€)
         </label>
       </div>
+      {webPageSelected && (
+        <div className="menuDesplegable">
+          <label className="labelMenu">
+            <p className="textMenu">Número de pàgines</p>
+            <input className="inputMenu" type="number" />
+          </label>
+          <label className="labelMenu">
+            <p className="textMenu">Número d'idiomes</p>
+            <input className="inputMenu" type="number" />
+          </label>
+        </div>
+      )}
       <div>
         <label>
           <input type="checkbox" name="seo" onChange={handleCheckboxChange} />
