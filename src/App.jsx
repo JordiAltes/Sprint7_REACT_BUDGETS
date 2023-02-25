@@ -7,6 +7,9 @@ function App() {
     googleAds: false,
   });
 
+  const [numPages, setNumPages] = useState(1);
+  const [numLenguages, setNumLenguages] = useState(1);
+
   const prices = {
     webPage: 500,
     seo: 300,
@@ -16,7 +19,7 @@ function App() {
     (total, option) =>
       selectedOptions[option] ? total + prices[option] : total,
     0
-  );
+  ) + numPages * numLenguages * 30;
   const [webPageSelected, setWebPageSelected] = useState(false);
 
   function handleCheckboxChange(event) {
@@ -44,11 +47,21 @@ function App() {
         <div className="menuDesplegable">
           <label className="labelMenu">
             <p className="textMenu">Número de pàgines</p>
-            <input className="inputMenu" type="number" />
+            <input
+              className="inputMenu"
+              type="number"
+              value={numPages}
+              onChange={(e) => setNumPages(parseInt(e.target.value))}
+            />
           </label>
           <label className="labelMenu">
             <p className="textMenu">Número d'idiomes</p>
-            <input className="inputMenu" type="number" />
+            <input
+              className="inputMenu"
+              type="number"
+              value={numLenguages}
+              onChange={(e) => setNumLenguages(parseInt(e.target.value))}
+            />
           </label>
         </div>
       )}
