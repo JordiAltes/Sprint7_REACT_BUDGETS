@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { WebForm } from "./components/WebForm";
 
 function App() {
   const [selectedOptions, setSelectedOptions] = useState({
@@ -9,18 +10,22 @@ function App() {
 
   const [numPages, setNumPages] = useState(1);
   const [numLenguages, setNumLenguages] = useState(1);
+  const [webPageSelected, setWebPageSelected] = useState(false);
 
   const prices = {
     webPage: 500,
     seo: 300,
     googleAds: 200,
   };
-  const totalPrice = Object.keys(selectedOptions).reduce(
+  let totalPrice = Object.keys(selectedOptions).reduce(
     (total, option) =>
       selectedOptions[option] ? total + prices[option] : total,
     0
-  ) + numPages * numLenguages * 30;
-  const [webPageSelected, setWebPageSelected] = useState(false);
+  );
+  totalPrice =
+    webPageSelected === true
+      ? totalPrice + numPages * numLenguages * 30
+      : totalPrice;
 
   function handleCheckboxChange(event) {
     const { name, checked } = event.target;
@@ -44,26 +49,12 @@ function App() {
         </label>
       </div>
       {webPageSelected && (
-        <div className="menuDesplegable">
-          <label className="labelMenu">
-            <p className="textMenu">Número de pàgines</p>
-            <input
-              className="inputMenu"
-              type="number"
-              value={numPages}
-              onChange={(e) => setNumPages(parseInt(e.target.value))}
-            />
-          </label>
-          <label className="labelMenu">
-            <p className="textMenu">Número d'idiomes</p>
-            <input
-              className="inputMenu"
-              type="number"
-              value={numLenguages}
-              onChange={(e) => setNumLenguages(parseInt(e.target.value))}
-            />
-          </label>
-        </div>
+        <WebForm
+          numPages={numPages}
+          numLanguages={numLenguages}
+          setNumPages={setNumPages}
+          setNumLanguages={setNumLenguages}
+        />
       )}
       <div>
         <label>
@@ -88,3 +79,26 @@ function App() {
   );
 }
 export default App;
+
+{
+  /* <div className="menuDesplegable">
+          <label className="labelMenu">
+            <p className="textMenu">Número de pàgines</p>
+            <input
+              className="inputMenu"
+              type="number"
+              value={numPages}
+              onChange={(e) => setNumPages(parseInt(e.target.value))}
+            />
+          </label>
+          <label className="labelMenu">
+            <p className="textMenu">Número d'idiomes</p>
+            <input
+              className="inputMenu"
+              type="number"
+              value={numLenguages}
+              onChange={(e) => setNumLenguages(parseInt(e.target.value))}
+            />
+          </label>
+        </div> */
+}
