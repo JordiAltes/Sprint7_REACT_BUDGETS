@@ -10,29 +10,53 @@ export function WebForm({
     setNumPages((count) => count + 1);
   };
   const decreasePages = () => {
-    setNumPages((count) => count - 1);
+    if (numPages > 0) {
+      setNumPages((count) => count - 1);
+    } else {
+      setNumPages(0);
+    }
   };
   const increaseLanguages = () => {
     setNumLanguages((count) => count + 1);
   };
   const decreaseLanguages = () => {
-    setNumLanguages((count) => count - 1);
+    if (numLanguages > 0) {
+      setNumLanguages((count) => count - 1);
+    } else {
+      setNumLanguages(0);
+    }
   };
 
   return (
-    <div>
-      <label>
-        <p>Número de pàgines</p>
-        <button className="button" onClick={increasePages}>+</button>
-        <input type="number" value={numPages} onChange={(e) => setNumPages(parseInt(e.target.value))}/>
-        <button className="button" onClick={decreasePages}>-</button>
+    <div className="menuDesplegable">
+      <label className="labelMenu">
+        <p className="textMenu">Número de pàgines</p>
+        <button className="button" onClick={increasePages}>
+          +
+        </button>
+        <input
+          type="number"
+          value={numPages}
+          onChange={(e) => setNumPages(parseInt(e.target.value))}
+        />
+        <button className="button" onClick={decreasePages}>
+          -
+        </button>
       </label>
       <br />
-      <label>
-        <p>Número d'idiomes</p>
-        <button className="button" onClick={increaseLanguages}>+</button>
-        <input type="number" value={numLanguages} onChange={(e) => setNumLanguages(parseInt(e.target.value))} />
-        <button className="button" onClick={decreaseLanguages}>-</button>
+      <label className="labelMenu">
+        <p className="textMenu">Número d'idiomes</p>
+        <button className="button" onClick={increaseLanguages}>
+          +
+        </button>
+        <input
+          type="number"
+          value={numLanguages}
+          onChange={(e) => setNumLanguages(parseInt(e.target.value))}
+        />
+        <button className="button" onClick={decreaseLanguages}>
+          -
+        </button>
       </label>
     </div>
   );

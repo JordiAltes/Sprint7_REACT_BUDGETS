@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import { WebForm } from "./components/WebForm";
+import { useLocalStorage } from "./components/LocalStorage";
 
 function App() {
-  const [selectedOptions, setSelectedOptions] = useState({
-    webPage: false,
-    seo: false,
-    googleAds: false,
-  });
+  const [selectedOptions, setSelectedOptions] = useLocalStorage(
+    "selectedOptions",
+    {
+      webPage: false,
+      seo: false,
+      googleAds: false,
+    }
+  );
 
-  const [numPages, setNumPages] = useState(1);
-  const [numLenguages, setNumLenguages] = useState(1);
+  const [numPages, setNumPages] = useLocalStorage("numPages", 1);
+  const [numLanguages, setNumLanguages] = useLocalStorage("numLanguages", 1);
   const [webPageSelected, setWebPageSelected] = useState(false);
 
   const prices = {
@@ -24,7 +28,7 @@ function App() {
   );
   totalPrice =
     webPageSelected === true
-      ? totalPrice + numPages * numLenguages * 30
+      ? totalPrice + numPages * numLanguages * 30
       : totalPrice;
 
   function handleCheckboxChange(event) {
@@ -44,6 +48,7 @@ function App() {
             type="checkbox"
             name="webPage"
             onChange={handleCheckboxChange}
+            checked={selectedOptions.webPage}
           />
           Una pàgina web (500€)
         </label>
@@ -51,14 +56,19 @@ function App() {
       {webPageSelected && (
         <WebForm
           numPages={numPages}
-          numLanguages={numLenguages}
+          numLanguages={numLanguages}
           setNumPages={setNumPages}
-          setNumLanguages={setNumLenguages}
+          setNumLanguages={setNumLanguages}
         />
       )}
       <div>
         <label>
-          <input type="checkbox" name="seo" onChange={handleCheckboxChange} />
+          <input
+            type="checkbox"
+            name="seo"
+            onChange={handleCheckboxChange}
+            checked={selectedOptions.seo}
+          />
           Una consultoria SEO (300€)
         </label>
       </div>
@@ -68,6 +78,7 @@ function App() {
             type="checkbox"
             name="googleAds"
             onChange={handleCheckboxChange}
+            checked={selectedOptions.googleAds}
           />
           Una campanya de Google Ads (200€)
         </label>
@@ -79,26 +90,3 @@ function App() {
   );
 }
 export default App;
-
-{
-  /* <div className="menuDesplegable">
-          <label className="labelMenu">
-            <p className="textMenu">Número de pàgines</p>
-            <input
-              className="inputMenu"
-              type="number"
-              value={numPages}
-              onChange={(e) => setNumPages(parseInt(e.target.value))}
-            />
-          </label>
-          <label className="labelMenu">
-            <p className="textMenu">Número d'idiomes</p>
-            <input
-              className="inputMenu"
-              type="number"
-              value={numLenguages}
-              onChange={(e) => setNumLenguages(parseInt(e.target.value))}
-            />
-          </label>
-        </div> */
-}

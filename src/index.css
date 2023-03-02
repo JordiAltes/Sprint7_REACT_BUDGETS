@@ -11,10 +11,11 @@
   margin-top: 10px;
   margin-bottom: 10px;
   flex-direction: column;
-  width: 30%;
+  width: 40%;
 }
 .labelMenu {
   display: block;
+  align-items: center;
 }
 .textMenu {
   display: inline-block;
