@@ -1,20 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { WebForm } from "./components/WebForm";
-import { useLocalStorage } from "./components/LocalStorage";
+import { saveDataToLocalStorage, getDataFromLocalStorage } from "./storage";
 
 function App() {
-  const [selectedOptions, setSelectedOptions] = useLocalStorage(
-    "selectedOptions",
-    {
+  const [selectedOptions, setSelectedOptions] = useState(
+    JSON.parse(localStorage.getItem("selectedOptions")) || {
       webPage: false,
       seo: false,
       googleAds: false,
     }
   );
 
-  const [numPages, setNumPages] = useLocalStorage("numPages", 1);
-  const [numLanguages, setNumLanguages] = useLocalStorage("numLanguages", 1);
-  const [webPageSelected, setWebPageSelected] = useState(false);
+  const [numPages, setNumPages] = useState(
+    parseInt(localStorage.getItem("numPages")) || 1
+  );
+  const [numLanguages, setNumLanguages] = useState(
+    parseInt(localStorage.getItem("numLanguages")) || 1
+  );
+  const [webPageSelected, setWebPageSelected] = useState(
+    JSON.parse(localStorage.getItem("webPageSelected")) || false
+  );
+
+  useEffect(() => {
+    const data = {
+      selectedOptions,
+      numPages,
+      numLanguages,
+      webPageSelected,
+    };
+    saveDataToLocalStorage(data);
+  }, [selectedOptions, numPages, numLanguages, webPageSelected]);
+
+  useEffect(() => {
+    const data = getDataFromLocalStorage();
+    if (data) {
+      setSelectedOptions(data.selectedOptions);
+      setNumPages(data.numPages);
+      setNumLanguages(data.numLanguages);
+      setWebPageSelected(data.webPageSelected);
+    }
+  }, []);
 
   const prices = {
     webPage: 500,
