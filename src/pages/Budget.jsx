@@ -20,6 +20,8 @@ function Budget() {
   const [webPageSelected, setWebPageSelected] = useState(
     JSON.parse(localStorage.getItem("webPageSelected")) || false
   );
+  const [totalPrice, setTotalPrice] = useState(
+    parseInt(localStorage.getItem("totalPrice")),0);
 
   useEffect(() => {
     const data = {
@@ -27,9 +29,10 @@ function Budget() {
       numPages,
       numLanguages,
       webPageSelected,
+      totalPrice,
     };
     saveDataToLocalStorage(data);
-  }, [selectedOptions, numPages, numLanguages, webPageSelected]);
+  }, [selectedOptions, numPages, numLanguages, webPageSelected, totalPrice]);
 
   useEffect(() => {
     const data = getDataFromLocalStorage();
@@ -38,6 +41,7 @@ function Budget() {
       setNumPages(data.numPages);
       setNumLanguages(data.numLanguages);
       setWebPageSelected(data.webPageSelected);
+      setTotalPrice(data.totalPrice);
     }
   }, []);
 
@@ -46,15 +50,16 @@ function Budget() {
     seo: 300,
     googleAds: 200,
   };
-  let totalPrice = Object.keys(selectedOptions).reduce(
-    (total, option) =>
-      selectedOptions[option] ? total + prices[option] : total,
-    0
-  );
-  totalPrice =
-    webPageSelected === true
-      ? totalPrice + numPages * numLanguages * 30
-      : totalPrice;
+  useEffect(() => {
+    let total = Object.keys(selectedOptions).reduce(
+      (total, option) =>
+        selectedOptions[option] ? total + prices[option] : total,
+      0
+    );
+    total =
+      webPageSelected === true ? total + numPages * numLanguages * 30 : total;
+    setTotalPrice(total);
+  }, [selectedOptions, numPages, numLanguages, webPageSelected]);
 
   function handleCheckboxChange(event) {
     const { name, checked } = event.target;

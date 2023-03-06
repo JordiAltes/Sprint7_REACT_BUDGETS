@@ -47,3 +47,23 @@
   border-radius: 20px;
   background-color: #EEEEEE;
 }
+@media (max-width: 1150px) {
+  .labelMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .button {
+    margin-right: 0;
+    margin-left: 0;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  .infoButton {
+    margin-right: 0;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+

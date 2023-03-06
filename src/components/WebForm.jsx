@@ -1,6 +1,7 @@
 import React from "react";
 import Swal from "sweetalert2";
 import "../index.css";
+import "animate.css";
 
 export function WebForm({
   numPages,
@@ -32,23 +33,26 @@ export function WebForm({
     Swal.fire({
       icon: "info",
       title: "Número de pàgines",
+      showClass: {
+        popup: "animate__animated animate__fadeInDown",
+      },
       text: "En aquest apartat has d'indicar el número de pagines que vols que tingui la web",
       customClass: {
         popup: "popup",
-      }
+      },
     });
   };
   const ExtraInfoLanguages = () => {
     Swal.fire({
       icon: "info",
       showClass: {
-        popup: 'animate__animated animate__fadeInDown'
+        popup: "animate__animated animate__fadeInDown",
       },
       title: "Número d'idiomes",
       text: "En aquest apartat has d'indicar el número d'idiomes que vols que tingui la web",
       customClass: {
         popup: "popup",
-      }
+      },
     });
   };
 
@@ -67,7 +71,9 @@ export function WebForm({
         <button className="button" onClick={decreasePages}>
           -
         </button>
-        <button className="infoButton" onClick={ExtraInfoPages}>i</button>
+        <button className="infoButton" onClick={ExtraInfoPages}>
+          i
+        </button>
       </label>
       <br />
       <label className="labelMenu">
@@ -83,7 +89,9 @@ export function WebForm({
         <button className="button" onClick={decreaseLanguages}>
           -
         </button>
-        <button className="infoButton" onClick={ExtraInfoLanguages}>i</button>
+        <button className="infoButton" onClick={ExtraInfoLanguages}>
+          i
+        </button>
       </label>
     </div>
   );
