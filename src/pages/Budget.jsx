@@ -12,10 +12,10 @@ function Budget() {
   );
 
   const [numPages, setNumPages] = useState(
-    parseInt(localStorage.getItem("numPages")) || 0
+    parseInt(localStorage.getItem("numPages")) || 1
   );
   const [numLanguages, setNumLanguages] = useState(
-    parseInt(localStorage.getItem("numLanguages")) || 0
+    parseInt(localStorage.getItem("numLanguages")) || 1
   );
   const [webPageSelected, setWebPageSelected] = useState(
     JSON.parse(localStorage.getItem("webPageSelected")) || false
