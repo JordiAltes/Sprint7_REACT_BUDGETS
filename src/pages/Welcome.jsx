@@ -17,7 +17,7 @@ function Welcome() {
       </p>
       <ul>
         <button className="buttonStart">
-          <Link to="/Budget">Crea el teu pressupost</Link>
+          <Link to="/Budget" style={{ textDecoration: 'none', color: 'inherit' }}>Crea el teu pressupost</Link>
         </button>
       </ul>
     </div>

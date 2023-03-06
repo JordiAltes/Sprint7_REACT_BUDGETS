@@ -21,7 +21,11 @@ function Budget() {
     JSON.parse(localStorage.getItem("webPageSelected")) || false
   );
   const [totalPrice, setTotalPrice] = useState(
-    parseInt(localStorage.getItem("totalPrice")),0);
+    parseInt(localStorage.getItem("totalPrice")),
+    0
+  );
+  const [clientName, setClientName] = useState(JSON.parse(localStorage.getItem("clientName")) || "" );
+  const [budgetName, setBudgetName] = useState(JSON.parse(localStorage.getItem("budgetName")) || "");
 
   useEffect(() => {
     const data = {
@@ -30,9 +34,19 @@ function Budget() {
       numLanguages,
       webPageSelected,
       totalPrice,
+      clientName,
+      budgetName,
     };
     saveDataToLocalStorage(data);
-  }, [selectedOptions, numPages, numLanguages, webPageSelected, totalPrice]);
+  }, [
+    selectedOptions,
+    numPages,
+    numLanguages,
+    webPageSelected,
+    totalPrice,
+    clientName,
+    budgetName,
+  ]);
 
   useEffect(() => {
     const data = getDataFromLocalStorage();
@@ -42,6 +56,8 @@ function Budget() {
       setNumLanguages(data.numLanguages);
       setWebPageSelected(data.webPageSelected);
       setTotalPrice(data.totalPrice);
+      setClientName(data.clientName);
+      setBudgetName(data.budgetName);
     }
   }, []);
 
@@ -67,6 +83,15 @@ function Budget() {
     if (name === "webPage") {
       setWebPageSelected(webPageSelected === false ? true : false);
     }
+  }
+  function restartBudget() {
+    setSelectedOptions(false),
+      setNumLanguages(1),
+      setNumPages(1),
+      setTotalPrice(0),
+      setWebPageSelected(false),
+      setBudgetName(""),
+      setClientName("");
   }
 
   return (
@@ -116,6 +141,23 @@ function Budget() {
       <div>
         <p>Preu total dels serveis contractats: {totalPrice}€</p>
       </div>
+      <div className="namesContainer">
+        Nom del client:
+        <input
+          type="text"
+          value={clientName}
+          onChange={(e) => setClientName(e.target.value)}
+        />
+        Nom del pressupost:
+        <input
+          type="text"
+          value={budgetName}
+          onChange={(e) => setBudgetName(e.target.value)}
+        />
+      </div>
+      <br />
+      <br />
+      <button onClick={restartBudget}>Reiniciar pressupost</button>
     </div>
   );
 }
