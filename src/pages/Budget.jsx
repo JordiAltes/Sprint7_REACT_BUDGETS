@@ -1,8 +1,8 @@
-/* import React, { useState, useEffect } from "react";
-import { WebForm } from "./components/WebForm";
-import { saveDataToLocalStorage, getDataFromLocalStorage } from "./storage";
+import React, { useState, useEffect } from "react";
+import { WebForm } from "../components/WebForm";
+import { saveDataToLocalStorage, getDataFromLocalStorage } from "../storage";
 
-function App() {
+function Budget() {
   const [selectedOptions, setSelectedOptions] = useState(
     JSON.parse(localStorage.getItem("selectedOptions")) || {
       webPage: false,
@@ -12,10 +12,10 @@ function App() {
   );
 
   const [numPages, setNumPages] = useState(
-    parseInt(localStorage.getItem("numPages")) || 1
+    parseInt(localStorage.getItem("numPages")) || 0
   );
   const [numLanguages, setNumLanguages] = useState(
-    parseInt(localStorage.getItem("numLanguages")) || 1
+    parseInt(localStorage.getItem("numLanguages")) || 0
   );
   const [webPageSelected, setWebPageSelected] = useState(
     JSON.parse(localStorage.getItem("webPageSelected")) || false
@@ -114,12 +114,4 @@ function App() {
     </div>
   );
 }
-export default App;
- */
-
-import React from "react";
-import Routes from "./application/routes";
-
-export const App = () => <Routes />;
-
-export default App;
+export default Budget;
