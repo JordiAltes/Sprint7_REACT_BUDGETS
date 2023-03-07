@@ -24,6 +24,5 @@ export const saveDataToLocalStorage = (data) => {
   localStorage.setItem("totalPrice", JSON.stringify(data.totalPrice));
   localStorage.setItem("clientName", JSON.stringify(data.clientName));
   localStorage.setItem("budgetName", JSON.stringify(data.budgetName));
-  console.log(data);
 };
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { WebForm } from "../components/WebForm";
 import { saveDataToLocalStorage, getDataFromLocalStorage } from "../storage";
+import { TemplateBudget } from "../templateBudget";
+import { ClientBudget } from "../components/ClientBudget";
 
 function Budget() {
   const [selectedOptions, setSelectedOptions] = useState(
@@ -24,8 +26,13 @@ function Budget() {
     parseInt(localStorage.getItem("totalPrice")),
     0
   );
-  const [clientName, setClientName] = useState(JSON.parse(localStorage.getItem("clientName")) || "" );
-  const [budgetName, setBudgetName] = useState(JSON.parse(localStorage.getItem("budgetName")) || "");
+  const [clientName, setClientName] = useState(
+    JSON.parse(localStorage.getItem("clientName")) || ""
+  );
+  const [budgetName, setBudgetName] = useState(
+    JSON.parse(localStorage.getItem("budgetName")) || ""
+  );
+  const [budgetList, setBudgetList] = useState([]);
 
   useEffect(() => {
     const data = {
@@ -47,19 +54,6 @@ function Budget() {
     clientName,
     budgetName,
   ]);
-
-  useEffect(() => {
-    const data = getDataFromLocalStorage();
-    if (data) {
-      setSelectedOptions(data.selectedOptions);
-      setNumPages(data.numPages);
-      setNumLanguages(data.numLanguages);
-      setWebPageSelected(data.webPageSelected);
-      setTotalPrice(data.totalPrice);
-      setClientName(data.clientName);
-      setBudgetName(data.budgetName);
-    }
-  }, []);
 
   const prices = {
     webPage: 500,
@@ -85,14 +79,42 @@ function Budget() {
     }
   }
   function restartBudget() {
-    setSelectedOptions(false),
-      setNumLanguages(1),
-      setNumPages(1),
-      setTotalPrice(0),
-      setWebPageSelected(false),
-      setBudgetName(""),
-      setClientName("");
+    setSelectedOptions({
+      webPage: false,
+      seo: false,
+      googleAds: false,
+    });
+    setNumLanguages(1);
+    setNumPages(1);
+    setTotalPrice(0);
+    setWebPageSelected(false);
+    setBudgetName("");
+    setClientName("");
   }
+
+  function getSelectedKeys() {
+    return Object.keys(selectedOptions).filter(
+      (key) => selectedOptions[key]
+    );
+  }
+
+  function saveBudget() {
+    const newDate = new Date();
+    const currentDate = newDate.toDateString("es-ES");
+    const userBudget = new TemplateBudget(
+      clientName,
+      budgetName,
+      numPages,
+      numLanguages,
+      totalPrice,
+      currentDate,
+      selectedKeys
+    );
+    console.log(userBudget);
+    restartBudget();
+  }
+
+  const selectedKeys = getSelectedKeys()
 
   return (
     <div className="body">
@@ -157,7 +179,18 @@ function Budget() {
       </div>
       <br />
       <br />
-      <button onClick={restartBudget}>Reiniciar pressupost</button>
+      <div>
+        <button onClick={restartBudget}>Reiniciar pressupost</button>
+        <button onClick={saveBudget}>Guardar pressupost</button>
+      </div>
+      <ClientBudget
+        clientName={clientName}
+        budgetName={budgetName}
+        numPages={numPages}
+        numLanguages={numLanguages}
+        totalPrice={totalPrice}
+        selectedKeys={selectedKeys}
+      />
     </div>
   );
 }
