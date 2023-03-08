@@ -93,9 +93,7 @@ function Budget() {
   }
 
   function getSelectedKeys() {
-    return Object.keys(selectedOptions).filter(
-      (key) => selectedOptions[key]
-    );
+    return Object.keys(selectedOptions).filter((key) => selectedOptions[key]);
   }
 
   function saveBudget() {
@@ -110,88 +108,118 @@ function Budget() {
       currentDate,
       selectedKeys
     );
+    const newBudgetList = [...budgetList];
+    newBudgetList.push(userBudget);
+    setBudgetList(newBudgetList);
+    console.log(newBudgetList);
     console.log(userBudget);
     restartBudget();
   }
 
-  const selectedKeys = getSelectedKeys()
+  const selectedKeys = getSelectedKeys();
 
   return (
-    <div className="body">
-      <p>Quin o quins servei vols contractar?</p>
-      <div>
-        <label>
-          <input
-            type="checkbox"
-            name="webPage"
-            onChange={handleCheckboxChange}
-            checked={selectedOptions.webPage}
+    <main className="body">
+      <div className="budgetForm">
+        <p>Quin o quins servei vols contractar?</p>
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              name="webPage"
+              onChange={handleCheckboxChange}
+              checked={selectedOptions.webPage}
+            />
+            Una pàgina web (500€)
+          </label>
+        </div>
+        {webPageSelected && (
+          <WebForm
+            numPages={numPages}
+            numLanguages={numLanguages}
+            setNumPages={setNumPages}
+            setNumLanguages={setNumLanguages}
           />
-          Una pàgina web (500€)
-        </label>
-      </div>
-      {webPageSelected && (
-        <WebForm
-          numPages={numPages}
-          numLanguages={numLanguages}
-          setNumPages={setNumPages}
-          setNumLanguages={setNumLanguages}
-        />
-      )}
-      <div>
-        <label>
+        )}
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              name="seo"
+              onChange={handleCheckboxChange}
+              checked={selectedOptions.seo}
+            />
+            Una consultoria SEO (300€)
+          </label>
+        </div>
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              name="googleAds"
+              onChange={handleCheckboxChange}
+              checked={selectedOptions.googleAds}
+            />
+            Una campanya de Google Ads (200€)
+          </label>
+        </div>
+        <div>
+          <p>Preu total dels serveis contractats: {totalPrice}€</p>
+        </div>
+        <div className="namesContainer">
+          Nom del client:
           <input
-            type="checkbox"
-            name="seo"
-            onChange={handleCheckboxChange}
-            checked={selectedOptions.seo}
+            type="text"
+            value={clientName}
+            onChange={(e) => setClientName(e.target.value)}
           />
-          Una consultoria SEO (300€)
-        </label>
-      </div>
-      <div>
-        <label>
+          Nom del pressupost:
           <input
-            type="checkbox"
-            name="googleAds"
-            onChange={handleCheckboxChange}
-            checked={selectedOptions.googleAds}
+            type="text"
+            value={budgetName}
+            onChange={(e) => setBudgetName(e.target.value)}
           />
-          Una campanya de Google Ads (200€)
-        </label>
+        </div>
+        <br />
+        <br />
+        <div>
+          <button onClick={restartBudget}>Reiniciar pressupost</button>
+          <button onClick={saveBudget}>Guardar pressupost</button>
+        </div>
       </div>
-      <div>
-        <p>Preu total dels serveis contractats: {totalPrice}€</p>
+      <div className="budgetListContainer">
+        <div className="budgetList">
+          {budgetList !== [] &&
+            budgetList.map(
+              (
+                {
+                  clientName,
+                  budgetName,
+                  numPages,
+                  numLanguages,
+                  totalPrice,
+                  selectedKeys,
+                },
+                index
+              ) => {
+                return (
+                  <>
+                    <ClientBudget
+                      key={index}
+                      clientName={clientName}
+                      budgetName={budgetName}
+                      numPages={numPages}
+                      numLanguages={numLanguages}
+                      totalPrice={totalPrice}
+                      selectedKeys={selectedKeys}
+                    />
+                  </>
+                );
+              }
+            )}
+        </div>
       </div>
-      <div className="namesContainer">
-        Nom del client:
-        <input
-          type="text"
-          value={clientName}
-          onChange={(e) => setClientName(e.target.value)}
-        />
-        Nom del pressupost:
-        <input
-          type="text"
-          value={budgetName}
-          onChange={(e) => setBudgetName(e.target.value)}
-        />
-      </div>
-      <br />
-      <br />
-      <div>
-        <button onClick={restartBudget}>Reiniciar pressupost</button>
-        <button onClick={saveBudget}>Guardar pressupost</button>
-      </div>
-      <ClientBudget
-        clientName={clientName}
-        budgetName={budgetName}
-        numPages={numPages}
-        numLanguages={numLanguages}
-        totalPrice={totalPrice}
-        selectedKeys={selectedKeys}
-      />
-    </div>
+    </main>
   );
 }
 export default Budget;

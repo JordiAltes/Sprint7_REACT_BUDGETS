@@ -56,6 +56,28 @@
 .buttonStart:active {
   transform: translateY(2px);
 }
+.body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.budgetForm {
+  width: 50%;
+}
+
+.budgetListContainer {
+  width: 50%;
+}
+
+.budgetList {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
 @media (max-width: 1150px) {
   .labelMenu {
     display: flex;
