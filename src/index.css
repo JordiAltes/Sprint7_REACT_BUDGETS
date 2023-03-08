@@ -72,11 +72,16 @@
 }
 
 .budgetList {
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.budgetList:not(:empty) {
   background-color: #f5f5f5;
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 20px;
+
+
 }
 @media (max-width: 1150px) {
   .labelMenu {
