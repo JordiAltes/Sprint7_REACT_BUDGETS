@@ -6,6 +6,7 @@ export const getDataFromLocalStorage = () => {
   const totalPrice = parseInt(localStorage.getItem("totalPrice"));
   const clientName = JSON.parse(localStorage.getItem("clientName"))
   const budgetName = JSON.parse(localStorage.getItem("budgetName"))
+  const budgetList = JSON.parse(localStorage.getItem("budgetList"))
   return {
     selectedOptions,
     numPages,
@@ -14,6 +15,7 @@ export const getDataFromLocalStorage = () => {
     totalPrice,
     clientName,
     budgetName,
+    budgetList,
   };
 };
 export const saveDataToLocalStorage = (data) => {
@@ -24,5 +26,6 @@ export const saveDataToLocalStorage = (data) => {
   localStorage.setItem("totalPrice", JSON.stringify(data.totalPrice));
   localStorage.setItem("clientName", JSON.stringify(data.clientName));
   localStorage.setItem("budgetName", JSON.stringify(data.budgetName));
+  localStorage.setItem("budgetList", JSON.stringify(data.budgetList))
 };
 

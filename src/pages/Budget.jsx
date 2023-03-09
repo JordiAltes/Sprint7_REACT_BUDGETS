@@ -5,34 +5,49 @@ import { TemplateBudget } from "../templateBudget";
 import { ClientBudget } from "../components/ClientBudget";
 
 function Budget() {
-  const [selectedOptions, setSelectedOptions] = useState(
-    JSON.parse(localStorage.getItem("selectedOptions")) || {
-      webPage: false,
-      seo: false,
-      googleAds: false,
-    }
-  );
+  const [selectedOptions, setSelectedOptions] = useState(() => {
+    const dataFromLocalStorage = getDataFromLocalStorage();
+    return (
+      dataFromLocalStorage.selectedOptions || {
+        webPage: false,
+        seo: false,
+        googleAds: false,
+      }
+    );
+  });
 
-  const [numPages, setNumPages] = useState(
-    parseInt(localStorage.getItem("numPages")) || 1
-  );
-  const [numLanguages, setNumLanguages] = useState(
-    parseInt(localStorage.getItem("numLanguages")) || 1
-  );
-  const [webPageSelected, setWebPageSelected] = useState(
-    JSON.parse(localStorage.getItem("webPageSelected")) || false
-  );
-  const [totalPrice, setTotalPrice] = useState(
-    parseInt(localStorage.getItem("totalPrice")),
-    0
-  );
-  const [clientName, setClientName] = useState(
-    JSON.parse(localStorage.getItem("clientName")) || ""
-  );
-  const [budgetName, setBudgetName] = useState(
-    JSON.parse(localStorage.getItem("budgetName")) || ""
-  );
-  const [budgetList, setBudgetList] = useState([]);
+  const [numPages, setNumPages] = useState(() => {
+    const dataFromLocalStorage = getDataFromLocalStorage();
+    return parseInt(dataFromLocalStorage.numPages) || 0;
+  });
+
+  const [numLanguages, setNumLanguages] = useState(() => {
+    const dataFromLocalStorage = getDataFromLocalStorage();
+    return parseInt(dataFromLocalStorage.numLanguages) || 0;
+  });
+
+  const [webPageSelected, setWebPageSelected] = useState(() => {
+    const dataFromLocalStorage = getDataFromLocalStorage();
+    return dataFromLocalStorage.webPageSelected || false;
+  });
+
+  const [totalPrice, setTotalPrice] = useState(() => {
+    const dataFromLocalStorage = getDataFromLocalStorage();
+    return parseInt(dataFromLocalStorage.totalPrice) || 0;
+  });
+
+  const [clientName, setClientName] = useState(() => {
+    const dataFromLocalStorage = getDataFromLocalStorage();
+    return dataFromLocalStorage.clientName || "";
+  });
+
+  const [budgetName, setBudgetName] = useState(() => {
+    const dataFromLocalStorage = getDataFromLocalStorage();
+    return dataFromLocalStorage.budgetName || "";
+  });
+  const [budgetList, setBudgetList] = useState( () => {
+    const dataFromLocalStorage = getDataFromLocalStorage();
+    return dataFromLocalStorage.budgetList || []});
 
   useEffect(() => {
     const data = {
@@ -43,6 +58,7 @@ function Budget() {
       totalPrice,
       clientName,
       budgetName,
+      budgetList,
     };
     saveDataToLocalStorage(data);
   }, [
@@ -53,6 +69,7 @@ function Budget() {
     totalPrice,
     clientName,
     budgetName,
+    budgetList,
   ]);
 
   const prices = {
@@ -84,8 +101,8 @@ function Budget() {
       seo: false,
       googleAds: false,
     });
-    setNumLanguages(1);
-    setNumPages(1);
+    setNumLanguages(0);
+    setNumPages(0);
     setTotalPrice(0);
     setWebPageSelected(false);
     setBudgetName("");
