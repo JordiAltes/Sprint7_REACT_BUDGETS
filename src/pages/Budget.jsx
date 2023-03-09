@@ -135,6 +135,17 @@ function Budget() {
 
   const selectedKeys = getSelectedKeys();
 
+  function sortByLetter() {
+    const orderByTitle = budgetList
+      .map((e) => e)
+      .sort((a, b) => {
+        a.budgetName - b.budgetName;
+        if (a.budgetName > b.budgetName) return 1;
+        else return -1;
+      });
+      setBudgetList(orderByTitle)
+  }
+
   return (
     <main className="body">
       <div className="budgetForm">
@@ -234,6 +245,11 @@ function Budget() {
                 );
               }
             )}
+        </div>
+        <div>
+          <button onClick={sortByLetter}>Filtrar alfabetiament</button>
+          <button>Filtrar per data</button>
+          <button>Reiniciar ordre</button>
         </div>
       </div>
     </main>
