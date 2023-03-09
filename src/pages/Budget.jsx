@@ -45,9 +45,11 @@ function Budget() {
     const dataFromLocalStorage = getDataFromLocalStorage();
     return dataFromLocalStorage.budgetName || "";
   });
-  const [budgetList, setBudgetList] = useState( () => {
+  const [budgetList, setBudgetList] = useState(() => {
     const dataFromLocalStorage = getDataFromLocalStorage();
-    return dataFromLocalStorage.budgetList || []});
+    return dataFromLocalStorage.budgetList || [];
+  });
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
     const data = {
@@ -115,7 +117,13 @@ function Budget() {
 
   function saveBudget() {
     const newDate = new Date();
-    const currentDate = newDate.toDateString("es-ES");
+    const currentDate = newDate.toLocaleString("es-ES", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      hour: "numeric",
+      minute: "numeric",
+    });
     const userBudget = new TemplateBudget(
       clientName,
       budgetName,
@@ -143,7 +151,31 @@ function Budget() {
         if (a.budgetName > b.budgetName) return 1;
         else return -1;
       });
-      setBudgetList(orderByTitle)
+    setBudgetList(orderByTitle);
+  }
+  function sortByDate() {
+    const orderByDate = budgetList
+      .map((e) => e)
+      .sort((a, b) => {
+        a.currentDate - b.currentDate;
+        if (a.currentDate < b.currentDate) return 1;
+        else return -1;
+      });
+    setBudgetList(orderByDate);
+  }
+  function reorderBudgets() {
+    const reorder = budgetList
+      .map((e) => e)
+      .sort((a, b) => {
+        a.currentDate - b.currentDate;
+        if (a.currentDate > b.currentDate) return 1;
+        else return -1;
+      });
+    setBudgetList(reorder);
+  }
+  function handleChangesSearch(e) {
+    setSearch(e.target.value)
+
   }
 
   return (
@@ -217,6 +249,17 @@ function Budget() {
       </div>
       <div className="budgetListContainer">
         <div className="budgetList">
+          <div className="sortButtons">
+            <button onClick={sortByLetter}>Filtrar alfabeticament</button>
+            <button onClick={sortByDate}>Filtrar per data</button>
+            <button onClick={reorderBudgets}>Reiniciar ordre</button>
+            <input
+              type="text"
+              value={search}
+              onChange={handleChangesSearch}
+              placeholder="Cerca un pressupost pel títol"
+            />
+          </div>
           {budgetList !== [] &&
             budgetList.map(
               (
@@ -227,6 +270,7 @@ function Budget() {
                   numLanguages,
                   totalPrice,
                   selectedKeys,
+                  currentDate,
                 },
                 index
               ) => {
@@ -240,16 +284,12 @@ function Budget() {
                       numLanguages={numLanguages}
                       totalPrice={totalPrice}
                       selectedKeys={selectedKeys}
+                      currentDate={currentDate}
                     />
                   </>
                 );
               }
             )}
-        </div>
-        <div>
-          <button onClick={sortByLetter}>Filtrar alfabetiament</button>
-          <button>Filtrar per data</button>
-          <button>Reiniciar ordre</button>
         </div>
       </div>
     </main>

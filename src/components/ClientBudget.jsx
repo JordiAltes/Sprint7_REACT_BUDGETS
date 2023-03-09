@@ -6,7 +6,8 @@ export function ClientBudget({
   numPages,
   numLanguages,
   totalPrice,
-  selectedKeys
+  selectedKeys,
+  currentDate
 }) {
   return (
     <div>
@@ -22,6 +23,8 @@ export function ClientBudget({
           Idiomes: {numLanguages}
           <br />
           Preu final: {totalPrice}
+          <br />
+          Data de creació: {currentDate}
         </p>
       </div>
     </div>
