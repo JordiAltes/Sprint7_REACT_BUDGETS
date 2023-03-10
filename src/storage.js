@@ -29,3 +29,63 @@ export const saveDataToLocalStorage = (data) => {
   localStorage.setItem("budgetList", JSON.stringify(data.budgetList))
 };
 
+/* {filteredBudget.length > 0
+  ? filteredBudget.map(
+      (
+        {
+          clientName,
+          budgetName,
+          numPages,
+          numLanguages,
+          totalPrice,
+          selectedKeys,
+          currentDate,
+        },
+        index
+      ) => {
+        return (
+          <>
+            <ClientBudget
+              key={index}
+              clientName={clientName}
+              budgetName={budgetName}
+              numPages={numPages}
+              numLanguages={numLanguages}
+              totalPrice={totalPrice}
+              selectedKeys={selectedKeys}
+              currentDate={currentDate}
+            />
+          </>
+        );
+      }
+    )
+  : budgetList.map(
+      (
+        {
+          clientName,
+          budgetName,
+          numPages,
+          numLanguages,
+          totalPrice,
+          selectedKeys,
+          currentDate,
+        },
+        index
+      ) => {
+        return (
+          <>
+            <ClientBudget
+              key={index}
+              clientName={clientName}
+              budgetName={budgetName}
+              numPages={numPages}
+              numLanguages={numLanguages}
+              totalPrice={totalPrice}
+              selectedKeys={selectedKeys}
+              currentDate={currentDate}
+            />
+          </>
+        );
+      }
+    )} */
+

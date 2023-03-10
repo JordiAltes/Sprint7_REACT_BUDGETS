@@ -49,7 +49,8 @@ function Budget() {
     const dataFromLocalStorage = getDataFromLocalStorage();
     return dataFromLocalStorage.budgetList || [];
   });
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState("");
+  const [filteredBudget, setFilteredBudget] = useState([]);
 
   useEffect(() => {
     const data = {
@@ -136,8 +137,6 @@ function Budget() {
     const newBudgetList = [...budgetList];
     newBudgetList.push(userBudget);
     setBudgetList(newBudgetList);
-    console.log(newBudgetList);
-    console.log(userBudget);
     restartBudget();
   }
 
@@ -172,10 +171,6 @@ function Budget() {
         else return -1;
       });
     setBudgetList(reorder);
-  }
-  function handleChangesSearch(e) {
-    setSearch(e.target.value)
-
   }
 
   return (
@@ -253,12 +248,6 @@ function Budget() {
             <button onClick={sortByLetter}>Filtrar alfabeticament</button>
             <button onClick={sortByDate}>Filtrar per data</button>
             <button onClick={reorderBudgets}>Reiniciar ordre</button>
-            <input
-              type="text"
-              value={search}
-              onChange={handleChangesSearch}
-              placeholder="Cerca un pressupost pel títol"
-            />
           </div>
           {budgetList !== [] &&
             budgetList.map(
@@ -271,8 +260,7 @@ function Budget() {
                   totalPrice,
                   selectedKeys,
                   currentDate,
-                },
-                index
+                }, index
               ) => {
                 return (
                   <>
