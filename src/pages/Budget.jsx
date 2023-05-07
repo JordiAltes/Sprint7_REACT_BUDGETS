@@ -249,7 +249,7 @@ function Budget() {
             <button onClick={sortByDate}>Filtrar per data</button>
             <button onClick={reorderBudgets}>Reiniciar ordre</button>
           </div>
-          {budgetList !== [] &&
+          {budgetList != [] &&
             budgetList.map(
               (
                 {
